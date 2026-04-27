@@ -6,83 +6,66 @@
   <title>BTC Market Report</title>
   <style>
     :root {
-      --bg: #eef2ec;
-      --panel: #fffdf7;
-      --panel-strong: #ffffff;
-      --ink: #14211e;
-      --muted: #66736f;
-      --line: #d7ded7;
-      --line-strong: #bfcac2;
-      --accent: #0d6b5f;
-      --accent-2: #d9852b;
-      --accent-soft: #e2f2ed;
-      --danger-soft: #fff0e0;
-      --hero: #0f2622;
-      --hero-2: #173d35;
-      --shadow: 0 22px 70px rgba(22, 33, 30, 0.14);
+      --bg: #f6f6f2;
+      --paper: #fffefa;
+      --paper-soft: #fbfaf5;
+      --ink: #202421;
+      --muted: #6b716c;
+      --subtle: #8a918b;
+      --line: #e2e2da;
+      --line-strong: #c8cbc3;
+      --accent: #2f6f62;
+      --accent-soft: #e9f1ee;
+      --amber: #b9853b;
+      --shadow: 0 12px 34px rgba(31, 35, 32, 0.08);
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(13,107,95,.18), transparent 28rem),
-        radial-gradient(circle at 90% 8%, rgba(217,133,43,.16), transparent 26rem),
-        linear-gradient(135deg, #eef2ec 0%, #f8f4eb 58%, #e8f0ec 100%);
+      background: var(--bg);
       color: var(--ink);
-      font-family: "Avenir Next", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-      line-height: 1.65;
+      font-family: "Apple SD Gothic Neo", "Avenir Next", "Malgun Gothic", sans-serif;
+      line-height: 1.72;
     }
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background-image:
-        linear-gradient(rgba(20,33,30,.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20,33,30,.045) 1px, transparent 1px);
-      background-size: 34px 34px;
-      mask-image: linear-gradient(to bottom, black, transparent 70%);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(47,111,98,.08), transparent 30rem),
+        radial-gradient(circle at 90% 12%, rgba(185,133,59,.08), transparent 28rem);
     }
     .shell {
-      width: min(1100px, calc(100% - 28px));
+      position: relative;
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 24px 0 72px;
+      padding: 28px 0 76px;
     }
     header {
       position: relative;
       overflow: hidden;
       margin-bottom: 18px;
-      padding: clamp(24px, 5vw, 46px);
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 34px;
-      background:
-        radial-gradient(circle at 82% 18%, rgba(217,133,43,.38), transparent 19rem),
-        linear-gradient(135deg, var(--hero), var(--hero-2));
-      color: #f7fbf7;
+      padding: clamp(24px, 5vw, 44px);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: linear-gradient(180deg, #ffffff, var(--paper-soft));
+      color: var(--ink);
       box-shadow: var(--shadow);
-    }
-    header::after {
-      content: "";
-      position: absolute;
-      inset: auto -70px -120px auto;
-      width: 260px;
-      height: 260px;
-      border: 34px solid rgba(255,255,255,.08);
-      border-radius: 50%;
     }
     .hero-grid {
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(210px, 300px);
+      grid-template-columns: minmax(0, 1fr) minmax(230px, 320px);
       gap: 24px;
       align-items: end;
     }
     .eyebrow {
-      color: #a7e5d9;
-      font: 800 12px/1.2 "Avenir Next", "Apple SD Gothic Neo", sans-serif;
-      letter-spacing: .14em;
+      color: var(--subtle);
+      font: 760 12px/1.2 "Avenir Next", "Apple SD Gothic Neo", sans-serif;
+      letter-spacing: .12em;
       text-transform: uppercase;
     }
     h1, h2, h3, h4 {
@@ -91,29 +74,28 @@
       margin: 0 0 .65em;
     }
     header h1 {
-      margin: .22em 0 .16em;
-      font-size: clamp(38px, 8vw, 82px);
-      letter-spacing: -0.055em;
+      margin: .22em 0 .12em;
+      font-size: clamp(34px, 7vw, 72px);
+      letter-spacing: -0.052em;
     }
     .hero-copy {
       max-width: 680px;
       margin: 0;
-      color: rgba(247,251,247,.78);
-      font-size: clamp(15px, 2.8vw, 18px);
+      color: var(--muted);
+      font-size: clamp(14px, 2.4vw, 16px);
     }
     .meta {
       display: grid;
       gap: 10px;
-      padding: 18px;
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 24px;
-      background: rgba(255,255,255,.08);
-      backdrop-filter: blur(14px);
-      color: rgba(247,251,247,.82);
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      color: var(--muted);
       font-size: 14px;
     }
     .meta strong {
-      color: #fff;
+      color: var(--ink);
       font-size: 13px;
       letter-spacing: .08em;
       text-transform: uppercase;
@@ -123,65 +105,155 @@
     }
     article {
       display: grid;
-      gap: 16px;
+      gap: 14px;
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(280px, 1.1fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .price-card, .brief-card, .scenario-panel {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .price-card {
+      padding: 22px;
+    }
+    .price-label {
+      color: var(--subtle);
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .price-value {
+      margin-top: 8px;
+      font-size: clamp(34px, 7vw, 58px);
+      font-weight: 780;
+      letter-spacing: -.055em;
+    }
+    .price-caption {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .brief-card, .scenario-panel {
+      padding: 20px;
+    }
+    .brief-card h2, .scenario-panel h2 {
+      margin: 0 0 12px;
+      color: #2a302c;
+      font-size: 15px;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+    .brief-card ul {
+      gap: 0;
+      margin: 0;
+      padding: 0;
+    }
+    .brief-card li {
+      padding: 11px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: #3c423e;
+      font-size: 14px;
+    }
+    .brief-card li:first-child { border-top: 0; padding-top: 0; }
+    .scenario-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 120px 42px;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .scenario-row:nth-of-type(2) { border-top: 0; }
+    .scenario-label {
+      overflow: hidden;
+      color: #3c423e;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .scenario-track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #ecece5;
+    }
+    .scenario-track span {
+      display: block;
+      width: var(--p);
+      height: 100%;
+      border-radius: inherit;
+      background: #42544d;
+    }
+    .scenario-value {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
     }
     h3 {
-      margin: 20px 4px 2px;
-      font-size: clamp(26px, 5vw, 44px);
-      color: #15251f;
+      margin: 18px 4px 2px;
+      font-size: clamp(22px, 4.2vw, 34px);
+      color: #242a26;
     }
     h4 {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--line);
-      font-size: clamp(19px, 3.2vw, 27px);
-      color: #122b26;
+      font-size: clamp(17px, 2.8vw, 22px);
+      color: #2b332f;
     }
     h4::before {
       content: "";
-      flex: 0 0 10px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--accent-2);
-      box-shadow: 0 0 0 6px rgba(217,133,43,.16);
+      flex: 0 0 4px;
+      width: 4px;
+      height: 20px;
+      border-radius: 999px;
+      background: var(--accent);
     }
-    p, li { font-size: clamp(15px, 2.55vw, 17px); }
+    p, li { font-size: clamp(14px, 2.35vw, 16px); }
     ul {
       display: grid;
-      gap: 10px;
-      margin: 14px 0 0;
+      gap: 0;
+      margin: 6px 0 0;
       padding: 0;
       list-style: none;
     }
     li {
       position: relative;
       margin: 0;
-      padding: 13px 15px 13px 18px;
-      border: 1px solid #e4e9e3;
-      border-left: 4px solid var(--accent);
-      border-radius: 16px;
-      background: linear-gradient(180deg, #fff, #fbfdf8);
-      box-shadow: 0 8px 24px rgba(20,33,30,.055);
+      padding: 13px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
-    li:nth-child(3n + 2) { border-left-color: var(--accent-2); }
-    li:nth-child(3n) { border-left-color: #365c7d; }
     strong {
-      color: #102a25;
-      font-weight: 850;
+      color: #2b302c;
+      font-weight: 680;
     }
-    em { color: #3d514c; }
+    em { color: #505751; }
     code {
-      padding: .13em .42em;
-      border: 1px solid #d9eadf;
-      border-radius: .55em;
-      background: var(--accent-soft);
-      color: #0b594f;
+      padding: .08em .32em;
+      border: 1px solid #dadfd9;
+      border-radius: .42em;
+      background: #f2f4ef;
+      color: #2c463f;
       font-family: "SF Mono", "Menlo", monospace;
-      font-size: .88em;
-      font-weight: 700;
+      font-size: .86em;
+      font-weight: 620;
     }
     hr {
       border: 0;
@@ -190,16 +262,22 @@
       margin: 2rem 0;
     }
     .toc {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      margin: 0 0 14px;
+      padding: 10px 0;
+      background: linear-gradient(180deg, var(--bg) 72%, rgba(246,246,242,0));
+    }
+    .toc-inner {
       display: flex;
       flex-wrap: wrap;
-      gap: 9px;
-      margin-bottom: 18px;
-      padding: 14px;
-      border: 1px solid rgba(13,107,95,.16);
-      border-radius: 22px;
-      background: rgba(255,253,247,.78);
-      box-shadow: 0 12px 38px rgba(20,33,30,.08);
-      backdrop-filter: blur(10px);
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,254,250,.92);
+      box-shadow: 0 10px 26px rgba(31,35,32,.06);
     }
     .toc-label {
       align-self: center;
@@ -211,13 +289,13 @@
       text-transform: uppercase;
     }
     .toc a {
-      padding: 8px 11px;
-      border: 1px solid #dce6dd;
+      padding: 7px 10px;
+      border: 1px solid #dfdfd8;
       border-radius: 999px;
       background: #fff;
-      color: #15362f;
-      font-size: 13px;
-      font-weight: 750;
+      color: #3b413d;
+      font-size: 12px;
+      font-weight: 650;
       text-decoration: none;
       transition: transform .16s ease, border-color .16s ease, background .16s ease;
     }
@@ -228,27 +306,27 @@
     }
     .report-section {
       scroll-margin-top: 18px;
-      padding: clamp(18px, 3vw, 26px);
+      padding: clamp(17px, 3vw, 24px);
       border: 1px solid var(--line);
-      border-radius: 26px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,253,247,.94)),
-        var(--panel);
-      box-shadow: 0 16px 46px rgba(20,33,30,.09);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
     }
     .notice {
-      color: rgba(247,251,247,.66);
+      color: var(--subtle);
       font-size: 12px;
     }
     @media (max-width: 620px) {
-      .shell { width: min(100% - 18px, 1100px); padding-top: 10px; }
-      header { border-radius: 24px; }
+      .shell { width: min(100% - 18px, 1180px); padding-top: 10px; }
+      header { border-radius: 20px; }
       .hero-grid { grid-template-columns: 1fr; }
+      .dashboard { grid-template-columns: 1fr; }
       .meta { padding: 14px; }
-      .toc { overflow-x: auto; flex-wrap: nowrap; padding: 10px; }
+      .toc { padding: 7px 0; }
+      .toc-inner { overflow-x: auto; flex-wrap: nowrap; }
       .toc a { white-space: nowrap; }
-      .report-section { border-radius: 20px; padding: 16px; }
-      li { padding: 12px 13px; border-radius: 14px; }
+      .report-section { border-radius: 18px; padding: 15px; }
+      .scenario-row { grid-template-columns: minmax(0, 1fr) 78px 38px; }
     }
   </style>
 </head>
@@ -259,26 +337,72 @@
         <div>
           <div class="eyebrow">v2-vision-codex report</div>
           <h1>BTC Market Report</h1>
-          <p class="hero-copy">추출된 차트 지표와 교차 판단을 바탕으로 정리한 모바일 친화 리포트입니다.</p>
+          <p class="hero-copy">숫자는 차트 라벨 추출값을 우선하고, 판단은 지표 조합 가이드로 정리한 리포트입니다.</p>
         </div>
         <div class="meta">
           <div>
             <strong>Generated</strong>
-            <span>2026-04-28 02:03:35 KST</span>
+            <span>2026-04-28 02:09:24 KST</span>
           </div>
           <div class="notice">Public GitHub Pages report. Not financial advice.</div>
         </div>
       </div>
     </header>
-<nav class="toc" aria-label="Report sections">
-<span class="toc-label">Sections</span>
+    <section class="dashboard" aria-label="Report dashboard">
+      <div class="price-card">
+        <div class="price-label">Current Price</div>
+        <div class="price-value">76,592.9</div>
+        <div class="price-caption">첫 HTF 섹션에서 인용된 현재가 기준입니다.</div>
+      </div>
+      <div>
+<section class="brief-card" aria-label="Market brief">
+<h2>Market Brief</h2>
+<ul><li>추세(EMA): 현재가 76,592.9는 EMA20(73,284.6)·EMA50(75,211.6)·EMA100(75,563.7) 위, EMA200(82,388.6) 아래 → 중기 회복 국면이지만 장기 하락 필터(EMA200) 저항은 유효.</li>
+<li>VWAP 포지션: VWAP(73,419.8) 위, +1σ(76,855.1) 바로 아래 → 상단(1σ)에서 눌리는 조정 성격.</li>
+<li>모멘텀(오실레이터): RSI 57.2(중립 상단)이나 RSI EMA12 61.4 아래로 둔화. MACD 1,952.1 &gt; Signal 1,846.4, Hist 105.6(+) → 큰 방향은 아직 상승 모멘텀 잔존, 단 단기 식는 중.</li></ul>
+</section>
+<section class="scenario-panel" aria-label="Scenario probabilities">
+<h2>Scenario Mix</h2>
+<div class="scenario-row">
+<div class="scenario-label">A) 반등 후 추세 재개(스윙/중단타)</div>
+<div class="scenario-track">
+<span style="--p: 35%"></span>
+</div>
+<div class="scenario-value">35%</div>
+</div>
+<div class="scenario-row">
+<div class="scenario-label">B) 75.2~75.6 지지 리테스트 후 반등(단타/진입대기)</div>
+<div class="scenario-track">
+<span style="--p: 30%"></span>
+</div>
+<div class="scenario-value">30%</div>
+</div>
+<div class="scenario-row">
+<div class="scenario-label">C) VWAP(73.3k) 테스트/이탈(숏 또는 노트레이드)</div>
+<div class="scenario-track">
+<span style="--p: 20%"></span>
+</div>
+<div class="scenario-value">20%</div>
+</div>
+<div class="scenario-row">
+<div class="scenario-label">D) 73.3k~76.9k 박스권 소모(노트레이드/초단타)</div>
+<div class="scenario-track">
+<span style="--p: 15%"></span>
+</div>
+<div class="scenario-value">15%</div>
+</div>
+</section>
+      </div>
+    </section>
+<nav class="toc" aria-label="Report sections"><div class="toc-inner">
+<span class="toc-label">리포트 목차</span>
 <a href="#section-1">1. HTF 전체 방향 (1D)</a>
 <a href="#section-2">2. MTF 상세 분석 (4H / 1H)</a>
 <a href="#section-3">3. LTF 실행 확인 (15m)</a>
 <a href="#section-4">4. 크로스 피쳐 종합</a>
 <a href="#section-5">5. 매매 시나리오 (확률은 정성 추정, 합계 100%)</a>
 <a href="#section-6">6. 리스크 요인</a>
-</nav>
+</div></nav>
     <article>
 <h3>📊 BTC 종합 분석</h3>
 <section class="report-section" id="section-1">
