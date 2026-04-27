@@ -6,93 +6,182 @@
   <title>BTC Market Report</title>
   <style>
     :root {
-      --bg: #f5f1e8;
-      --panel: #fffaf0;
-      --ink: #1f2421;
-      --muted: #6f6a5f;
-      --line: #ded5c4;
-      --accent: #0f766e;
-      --accent-2: #b45309;
-      --shadow: 0 18px 50px rgba(44, 35, 20, 0.14);
+      --bg: #eef2ec;
+      --panel: #fffdf7;
+      --panel-strong: #ffffff;
+      --ink: #14211e;
+      --muted: #66736f;
+      --line: #d7ded7;
+      --line-strong: #bfcac2;
+      --accent: #0d6b5f;
+      --accent-2: #d9852b;
+      --accent-soft: #e2f2ed;
+      --danger-soft: #fff0e0;
+      --hero: #0f2622;
+      --hero-2: #173d35;
+      --shadow: 0 22px 70px rgba(22, 33, 30, 0.14);
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       background:
-        radial-gradient(circle at top left, rgba(15,118,110,.16), transparent 32rem),
-        linear-gradient(135deg, #f7efe0 0%, #efe6d5 48%, #f8f4eb 100%);
+        radial-gradient(circle at 10% 0%, rgba(13,107,95,.18), transparent 28rem),
+        radial-gradient(circle at 90% 8%, rgba(217,133,43,.16), transparent 26rem),
+        linear-gradient(135deg, #eef2ec 0%, #f8f4eb 58%, #e8f0ec 100%);
       color: var(--ink);
-      font-family: ui-serif, Georgia, "Times New Roman", serif;
-      line-height: 1.7;
+      font-family: "Avenir Next", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.65;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(20,33,30,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20,33,30,.045) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, black, transparent 70%);
     }
     .shell {
-      width: min(980px, calc(100% - 28px));
+      width: min(1100px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 28px 0 64px;
+      padding: 24px 0 72px;
     }
     header {
-      margin-bottom: 22px;
-      padding: 28px;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: rgba(255, 250, 240, 0.82);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+      padding: clamp(24px, 5vw, 46px);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(217,133,43,.38), transparent 19rem),
+        linear-gradient(135deg, var(--hero), var(--hero-2));
+      color: #f7fbf7;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -120px auto;
+      width: 260px;
+      height: 260px;
+      border: 34px solid rgba(255,255,255,.08);
+      border-radius: 50%;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(210px, 300px);
+      gap: 24px;
+      align-items: end;
     }
     .eyebrow {
-      color: var(--accent);
-      font: 700 12px/1.2 ui-sans-serif, system-ui, sans-serif;
+      color: #a7e5d9;
+      font: 800 12px/1.2 "Avenir Next", "Apple SD Gothic Neo", sans-serif;
       letter-spacing: .14em;
       text-transform: uppercase;
     }
     h1, h2, h3, h4 {
-      line-height: 1.22;
+      line-height: 1.24;
       letter-spacing: -0.025em;
-      margin: 1.5em 0 .5em;
+      margin: 0 0 .65em;
     }
     header h1 {
-      margin: .28em 0 .2em;
-      font-size: clamp(34px, 7vw, 72px);
+      margin: .22em 0 .16em;
+      font-size: clamp(38px, 8vw, 82px);
+      letter-spacing: -0.055em;
+    }
+    .hero-copy {
+      max-width: 680px;
+      margin: 0;
+      color: rgba(247,251,247,.78);
+      font-size: clamp(15px, 2.8vw, 18px);
     }
     .meta {
-      color: var(--muted);
-      font: 500 14px/1.5 ui-sans-serif, system-ui, sans-serif;
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 24px;
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(14px);
+      color: rgba(247,251,247,.82);
+      font-size: 14px;
+    }
+    .meta strong {
+      color: #fff;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .meta span {
+      display: block;
     }
     article {
-      padding: 28px;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
+      display: grid;
+      gap: 16px;
     }
-    article h3:first-child { margin-top: 0; }
     h3 {
-      padding-top: .6em;
-      font-size: clamp(24px, 4.8vw, 40px);
-      color: #173b35;
+      margin: 20px 4px 2px;
+      font-size: clamp(26px, 5vw, 44px);
+      color: #15251f;
     }
     h4 {
-      margin-top: 1.65em;
-      padding-bottom: .45em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--line);
-      font-size: clamp(18px, 3.2vw, 25px);
+      font-size: clamp(19px, 3.2vw, 27px);
+      color: #122b26;
     }
-    p, li { font-size: clamp(16px, 2.7vw, 18px); }
+    h4::before {
+      content: "";
+      flex: 0 0 10px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 0 6px rgba(217,133,43,.16);
+    }
+    p, li { font-size: clamp(15px, 2.55vw, 17px); }
     ul {
-      margin: .7em 0 1.25em;
-      padding-left: 1.2em;
+      display: grid;
+      gap: 10px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
     }
-    li { margin: .55em 0; }
+    li {
+      position: relative;
+      margin: 0;
+      padding: 13px 15px 13px 18px;
+      border: 1px solid #e4e9e3;
+      border-left: 4px solid var(--accent);
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff, #fbfdf8);
+      box-shadow: 0 8px 24px rgba(20,33,30,.055);
+    }
+    li:nth-child(3n + 2) { border-left-color: var(--accent-2); }
+    li:nth-child(3n) { border-left-color: #365c7d; }
     strong {
-      color: #0f4f48;
-      font-weight: 800;
+      color: #102a25;
+      font-weight: 850;
     }
+    em { color: #3d514c; }
     code {
-      padding: .12em .38em;
-      border-radius: .45em;
-      background: #ede2cc;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: .9em;
+      padding: .13em .42em;
+      border: 1px solid #d9eadf;
+      border-radius: .55em;
+      background: var(--accent-soft);
+      color: #0b594f;
+      font-family: "SF Mono", "Menlo", monospace;
+      font-size: .88em;
+      font-weight: 700;
     }
     hr {
       border: 0;
@@ -100,28 +189,99 @@
       background: var(--line);
       margin: 2rem 0;
     }
-    .notice {
-      margin-top: 18px;
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 18px;
+      padding: 14px;
+      border: 1px solid rgba(13,107,95,.16);
+      border-radius: 22px;
+      background: rgba(255,253,247,.78);
+      box-shadow: 0 12px 38px rgba(20,33,30,.08);
+      backdrop-filter: blur(10px);
+    }
+    .toc-label {
+      align-self: center;
+      margin-right: 4px;
       color: var(--muted);
-      font: 500 13px/1.5 ui-sans-serif, system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .toc a {
+      padding: 8px 11px;
+      border: 1px solid #dce6dd;
+      border-radius: 999px;
+      background: #fff;
+      color: #15362f;
+      font-size: 13px;
+      font-weight: 750;
+      text-decoration: none;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .toc a:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .report-section {
+      scroll-margin-top: 18px;
+      padding: clamp(18px, 3vw, 26px);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,253,247,.94)),
+        var(--panel);
+      box-shadow: 0 16px 46px rgba(20,33,30,.09);
+    }
+    .notice {
+      color: rgba(247,251,247,.66);
+      font-size: 12px;
     }
     @media (max-width: 620px) {
-      .shell { width: min(100% - 18px, 980px); padding-top: 10px; }
-      header, article { border-radius: 20px; padding: 19px; }
-      ul { padding-left: 1em; }
+      .shell { width: min(100% - 18px, 1100px); padding-top: 10px; }
+      header { border-radius: 24px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .meta { padding: 14px; }
+      .toc { overflow-x: auto; flex-wrap: nowrap; padding: 10px; }
+      .toc a { white-space: nowrap; }
+      .report-section { border-radius: 20px; padding: 16px; }
+      li { padding: 12px 13px; border-radius: 14px; }
     }
   </style>
 </head>
 <body>
   <main class="shell">
     <header>
-      <div class="eyebrow">v2-vision-codex report</div>
-      <h1>BTC Market Report</h1>
-      <div class="meta">Generated at 2026-04-28 01:55:36 KST</div>
-      <div class="notice">Public GitHub Pages report. Not financial advice.</div>
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">v2-vision-codex report</div>
+          <h1>BTC Market Report</h1>
+          <p class="hero-copy">추출된 차트 지표와 교차 판단을 바탕으로 정리한 모바일 친화 리포트입니다.</p>
+        </div>
+        <div class="meta">
+          <div>
+            <strong>Generated</strong>
+            <span>2026-04-28 02:03:35 KST</span>
+          </div>
+          <div class="notice">Public GitHub Pages report. Not financial advice.</div>
+        </div>
+      </div>
     </header>
+<nav class="toc" aria-label="Report sections">
+<span class="toc-label">Sections</span>
+<a href="#section-1">1. HTF 전체 방향 (1D)</a>
+<a href="#section-2">2. MTF 상세 분석 (4H / 1H)</a>
+<a href="#section-3">3. LTF 실행 확인 (15m)</a>
+<a href="#section-4">4. 크로스 피쳐 종합</a>
+<a href="#section-5">5. 매매 시나리오 (확률은 정성 추정, 합계 100%)</a>
+<a href="#section-6">6. 리스크 요인</a>
+</nav>
     <article>
 <h3>📊 BTC 종합 분석</h3>
+<section class="report-section" id="section-1">
 <h4>1. HTF 전체 방향 (1D)</h4>
 <ul>
 <li><strong>추세(EMA)</strong>: 현재가 <strong>76,592.9</strong>는 <strong>EMA20(73,284.6)·EMA50(75,211.6)·EMA100(75,563.7) 위</strong>, <strong>EMA200(82,388.6) 아래</strong> → <em>중기 회복 국면이지만 장기 하락 필터(EMA200) 저항은 유효</em>.</li>
@@ -129,6 +289,8 @@
 <li><strong>모멘텀(오실레이터)</strong>: <strong>RSI 57.2(중립 상단)</strong>이나 <strong>RSI EMA12 61.4 아래</strong>로 둔화. <strong>MACD 1,952.1 &gt; Signal 1,846.4, Hist 105.6(+)</strong> → <em>큰 방향은 아직 상승 모멘텀 잔존, 단 단기 식는 중</em>.</li>
 <li><strong>파생/수급</strong>: <strong>OI 255.973K(상승, 청록)</strong>인데 <strong>CVD Spot -223.125K(우하향), CVD Futs -699.348K(우하향)</strong> → <em>HTF 기준 “가격 방어 vs 매도 체결 우위” 형태(약한 bearish divergence/흡수 가능성, 신뢰도 중간)</em>. <strong>Funding 0.0022(양수)</strong>, <strong>LSR 49.528/50.472(거의 균형, 약숏)</strong>.</li>
 </ul>
+</section>
+<section class="report-section" id="section-2">
 <h4>2. MTF 상세 분석 (4H / 1H)</h4>
 <ul>
 <li><strong>4H 구조</strong>: 현재가 <strong>76,589.0</strong>가 <strong>EMA20(77,640.9)·EMA50(77,063.7) 아래</strong>, <strong>EMA100(75,631.6)·EMA200(73,730.1) 위</strong> → <em>상승 추세 내 조정(단기 약세, 중기 지지 유지)</em>.</li>
@@ -137,18 +299,24 @@
 <li><strong>1H 단기 약세</strong>: 현재가 <strong>76,586.0</strong>가 <strong>EMA200(77,092.1) 포함 전 EMA 아래</strong>(EMA20 77,759.7 / EMA50 77,863.8 / EMA100 77,712.8) → <em>반등해도 77.1~77.9 저항대가 두꺼움</em>.</li>
 <li><strong>1H 수급</strong>: <strong>OI 255.94K(상승, 청록)</strong>인데 <strong>CVD Spot 3.777K(우하향), CVD Futs 38.252K(우하향)</strong> → <em>조정 구간에서 포지션은 쌓이고(레버리지↑) 체결은 매도 우위(변동성↑)</em>.</li>
 </ul>
+</section>
+<section class="report-section" id="section-3">
 <h4>3. LTF 실행 확인 (15m)</h4>
 <ul>
 <li><strong>15m 추세/저항</strong>: 현재가 <strong>76,585.0</strong>가 <strong>+1σ 76,947.4 아래</strong>이고 <strong>EMA20 77,307.3 / EMA50 77,668.2 / EMA100 77,858.0 / EMA200 77,877.8 모두 아래</strong> → <em>단기 하락 흐름 지속</em>.</li>
 <li><strong>15m 모멘텀</strong>: <strong>RSI 27.9</strong>, <strong>StochRSI K/D 3.9/6.9(극과매도)</strong> → <em>기술적 반등 여지 큼(단, “추세 전환”과는 분리)</em>.</li>
 <li><strong>15m 파생</strong>: <strong>OI 255.898K(감소, 빨강)</strong> + <strong>CVD Spot 320(우하향), CVD Futs -11.835K(우하향)</strong> → <em>짧은 구간 디레버리징/매도 압력 동반(흔들기 구간 가능)</em>.</li>
 </ul>
+</section>
+<section class="report-section" id="section-4">
 <h4>4. 크로스 피쳐 종합</h4>
 <ul>
 <li><strong>상단 공통 저항(우선순위)</strong>: <strong>76,944~76,949(+1σ: 4H 76,944.0 / 1H 76,949.5 / 15m 76,947.4)</strong> → 돌파 후엔 <strong>77,063.7(4H EMA50)</strong>, <strong>77,640.9(4H EMA20)</strong>, 그리고 <strong>1H EMA대 77,092.1~77,863.8</strong>가 연속 저항.</li>
 <li><strong>하단 공통 지지(우선순위)</strong>: <strong>75,211.6(1D EMA50)~75,631.6(4H EMA100)</strong> → 이탈 시 <strong>73,419.8(1D VWAP) + 73,284.6(1D EMA20)</strong>가 핵심 방어선.</li>
 <li><strong>스퀴즈/변동성 체크</strong>: Funding이 <strong>0.0022(양수)</strong>이고 HTF에서 <strong>OI가 증가</strong>하는 구조라, <em>반등 실패 시 하방이 빠르게 확장될 리스크</em>는 있음. 다만 <strong>LSR이 49.528~51.048로 과밀은 아님</strong> → <em>스퀴즈 확신은 낮고 “중간 경계” 수준</em>.</li>
 </ul>
+</section>
+<section class="report-section" id="section-5">
 <h4>5. 매매 시나리오 (확률은 정성 추정, 합계 100%)</h4>
 <ul>
 <li><strong>A) 반등 후 추세 재개(스윙/중단타) | 35%</strong></li>
@@ -165,6 +333,8 @@
 <li><strong>D) 73.3k~76.9k 박스권 소모(노트레이드/초단타) | 15%</strong></li>
 <li>포인트: 상단 <strong>76,944 부근(+1σ)</strong>, 하단 <strong>73,420 부근(VWAP)</strong>에서만 짧게 대응, 추격 자제.</li>
 </ul>
+</section>
+<section class="report-section" id="section-6">
 <h4>6. 리스크 요인</h4>
 <ul>
 <li><strong>레버리지 축적</strong>: 1D/4H/1H <strong>OI 상승(255.94K~255.973K)</strong> → 한 방향으로 쏠릴 때 청산 변동성 확대 가능.</li>
@@ -172,6 +342,7 @@
 <li><strong>과매도 함정</strong>: 1H/15m <strong>RSI 27.9</strong>, StochRSI 극단 과매도는 <em>“반등”과 “급반등 후 재하락”을 동시에 열어둠</em>.</li>
 <li><strong>무효화 조건(핵심)</strong>: 강세 시나리오는 <strong>75,211.6~75,563.7</strong> 구간이 일봉 기준으로 무너지면 신뢰도 급락. (반대로 <strong>76,949~77,063 회복 후 77,640.9 재돌파</strong>는 약세 시나리오 약화)</li>
 </ul>
+</section>
     </article>
   </main>
 </body>
