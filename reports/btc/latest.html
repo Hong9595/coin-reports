@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BTC Market Report</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --panel: #fffaf0;
+      --ink: #1f2421;
+      --muted: #6f6a5f;
+      --line: #ded5c4;
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --shadow: 0 18px 50px rgba(44, 35, 20, 0.14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(15,118,110,.16), transparent 32rem),
+        linear-gradient(135deg, #f7efe0 0%, #efe6d5 48%, #f8f4eb 100%);
+      color: var(--ink);
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      line-height: 1.7;
+    }
+    .shell {
+      width: min(980px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+    header {
+      margin-bottom: 22px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 250, 240, 0.82);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .eyebrow {
+      color: var(--accent);
+      font: 700 12px/1.2 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, h4 {
+      line-height: 1.22;
+      letter-spacing: -0.025em;
+      margin: 1.5em 0 .5em;
+    }
+    header h1 {
+      margin: .28em 0 .2em;
+      font-size: clamp(34px, 7vw, 72px);
+    }
+    .meta {
+      color: var(--muted);
+      font: 500 14px/1.5 ui-sans-serif, system-ui, sans-serif;
+    }
+    article {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    article h3:first-child { margin-top: 0; }
+    h3 {
+      padding-top: .6em;
+      font-size: clamp(24px, 4.8vw, 40px);
+      color: #173b35;
+    }
+    h4 {
+      margin-top: 1.65em;
+      padding-bottom: .45em;
+      border-bottom: 1px solid var(--line);
+      font-size: clamp(18px, 3.2vw, 25px);
+    }
+    p, li { font-size: clamp(16px, 2.7vw, 18px); }
+    ul {
+      margin: .7em 0 1.25em;
+      padding-left: 1.2em;
+    }
+    li { margin: .55em 0; }
+    strong {
+      color: #0f4f48;
+      font-weight: 800;
+    }
+    code {
+      padding: .12em .38em;
+      border-radius: .45em;
+      background: #ede2cc;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .9em;
+    }
+    hr {
+      border: 0;
+      height: 1px;
+      background: var(--line);
+      margin: 2rem 0;
+    }
+    .notice {
+      margin-top: 18px;
+      color: var(--muted);
+      font: 500 13px/1.5 ui-sans-serif, system-ui, sans-serif;
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 18px, 980px); padding-top: 10px; }
+      header, article { border-radius: 20px; padding: 19px; }
+      ul { padding-left: 1em; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="eyebrow">v2-vision-codex report</div>
+      <h1>BTC Market Report</h1>
+      <div class="meta">Generated at 2026-04-28 00:37:00 KST</div>
+      <div class="notice">Public GitHub Pages report. Not financial advice.</div>
+    </header>
+    <article>
+<h3>📊 BTC 종합 분석</h3>
+<h4>1. HTF 전체 방향 (1D)</h4>
+<ul>
+<li><strong>가격/구조</strong>: 현재가 <strong>77,711.5</strong>. 단기 반등 흐름이지만 <strong>EMA200(82,399.7)</strong> 아래라 HTF에선 “상단 저항 하방” 구간.</li>
+<li><strong>EMA(1D)</strong>: 가격이 <strong>EMA20(75,318.2)·EMA50(73,328.5)·EMA100(75,585.9)</strong> 위 / <strong>EMA200(82,399.7)</strong> 아래 → <strong>중기 반등 + 장기 저항 잔존</strong>.</li>
+<li><strong>VWAP(월간)</strong>: <strong>VWAP 73,383.8</strong> 대비 <strong>+1σ(76,829.8)</strong> 위에서 유지, <strong>+2σ(80,275.9)</strong> 아래 → 평균 대비 강세지만 <strong>+2σ 돌파 전까진 추가 상단은 저항성</strong>.</li>
+<li><strong>모멘텀(1D)</strong>: RSI <strong>61.3</strong>(RSI EMA12 <strong>62.0</strong>)로 50 상단. MACD <strong>2,040.8</strong> &gt; Signal <strong>1,864.2</strong>, Histogram <strong>176.6(+)</strong> → HTF 상승 모멘텀 우위.</li>
+<li><strong>파생 수급(1D)</strong>: OI <strong>255.016K(증가)</strong> + CVD Spot <strong>-221.955K(우상향)</strong> / CVD Futs <strong>-690.671K(우상향)</strong> → <strong>가격 상승과 체결 우위가 동행</strong>(강한 다이버전스 근거는 약함).</li>
+<li><strong>포지션 편향(1D)</strong>: LSR 롱 <strong>49.528%</strong> / 숏 <strong>50.472%</strong>(거의 균형), Funding <strong>0.0004(양수)</strong> → 과열보단 <strong>완만한 롱 비용부담</strong>.</li>
+<li><strong>거래량(1D 라벨)</strong>: <strong>91.26K</strong>(평균 대비 판단 근거는 제한적).</li>
+<li><strong>핵심 레벨(HTF)</strong></li>
+<li>저항: <strong>80,275.9(VWAP +2σ)</strong> → <strong>82,399.7(EMA200)</strong></li>
+<li>지지: <strong>76,829.8(VWAP +1σ)</strong> → <strong>75,585.9(EMA100)</strong> / <strong>75,318.2(EMA20)</strong> → <strong>73,383.8(VWAP)</strong></li>
+</ul>
+<h4>2. MTF 상세 분석 (4H / 1H)</h4>
+<ul>
+<li><strong>4H 추세/레벨</strong>: 현재가 <strong>77,732.4</strong>, <strong>EMA20(77,844.2)</strong> 바로 아래지만 <strong>EMA50(77,121.3)·EMA100(75,631.5)·EMA200(73,711.1)</strong> 위 → <strong>상승 추세 내 단기 조정(눌림)</strong> 성격.</li>
+<li>VWAP <strong>73,273.7</strong>, <strong>+1σ(76,894.3)</strong> 위 / <strong>+2σ(80,514.9)</strong> 아래.</li>
+<li><strong>4H 모멘텀</strong>: RSI <strong>50.1</strong>(EMA12 <strong>54.2</strong>)로 중립 약화. StochRSI K <strong>7.5</strong>(과매도) / D <strong>37.3</strong>. MACD <strong>209.7</strong> &lt; Signal <strong>260.5</strong>, Histogram <strong>-50.8</strong> → <strong>추세는 유지하되 모멘텀 냉각</strong>.</li>
+<li><strong>4H 수급</strong>: OI <strong>255.019K(증가)</strong>, CVD Spot <strong>7.221K(우상향)</strong> / CVD Futs <strong>184.032K(횡보)</strong> → <strong>현물 체결은 받쳐주나 선물은 추격 매수 약함</strong>.</li>
+<li><strong>1H 구조</strong>: 현재가 <strong>77,732.3</strong>가 <strong>EMA20(78,069.5)·EMA50(77,985.9)·EMA100(77,758.1)</strong> 아래 / <strong>EMA200(77,088.7)</strong> 위 → <strong>단기 하락 압력 속 지지대 위 횡보/조정</strong>.</li>
+<li><strong>1H 모멘텀/수급</strong>: RSI <strong>42.2</strong>(EMA12 <strong>48.7</strong>)로 약세. StochRSI K <strong>13.0</strong> / D <strong>14.0</strong>(과매도). MACD <strong>-69.8</strong>, Histogram <strong>-115.4</strong>. CVD Spot <strong>4.584K(우하향)</strong> / CVD Futs <strong>43.423K(우하향)</strong> + OI <strong>255.022K(증가)</strong> → <strong>하락 구간에서 포지션이 늘며(신규 숏 축적 가능성) 매도 체결이 동행</strong>.</li>
+</ul>
+<h4>3. LTF 실행 확인 (15m)</h4>
+<ul>
+<li><strong>가격/EMA(15m)</strong>: 현재가 <strong>77,743.9</strong>가 <strong>EMA20(77,810.5)·EMA50(78,001.1)·EMA100(78,055.2)·EMA200(77,968.6)</strong> 아래 → <strong>초단기 약세 구간</strong>.</li>
+<li><strong>모멘텀(15m)</strong>: RSI <strong>43.1</strong>(EMA12 <strong>42.9</strong>)로 미약한 반등. MACD <strong>-84.8</strong> &gt; Signal <strong>-113.3</strong>, Histogram <strong>28.5(+)</strong> → <strong>하락 추세 속 반등 시도(초기)</strong>.</li>
+<li><strong>LTF 수급</strong>: OI <strong>255.025K(증가)</strong>, CVD Spot <strong>1.302K(우하향)</strong> / CVD Futs <strong>240(횡보)</strong> → <strong>반등 시도 대비 현물 체결이 아직 약해 반등 신뢰도는 낮음</strong>.</li>
+</ul>
+<h4>4. 크로스 피쳐 종합</h4>
+<ul>
+<li><strong>OI+Price</strong>: 1D/4H는 “가격 반등 + OI 증가”로 <strong>추세 강화(롱 축적 가능)</strong> 쪽. 반면 1H는 “가격 조정 + OI 증가”로 <strong>신규 숏 축적 가능성</strong>이 커져 <strong>단기 변동성 확대</strong> 소지.</li>
+<li><strong>CVD 다이버전스</strong>: HTF(1D/4H)는 CVD가 우상향이라 <strong>상승 정합성 양호</strong>. LTF(1H/15m)는 CVD가 우하향이라 <strong>단기 반등은 ‘수급 확인’이 필요</strong>.</li>
+<li><strong>Funding/LSR</strong>: Funding <strong>0.0004(양수)</strong>, LSR은 전 TF <strong>50% 부근(49.5~51%)</strong> → <strong>스퀴즈(롱/숏 과밀) 근거는 약함</strong>. 다만 OI가 계속 늘어 <strong>레버리지 축적</strong> 자체가 변동성 리스크.</li>
+<li><strong>VWAP 상태</strong>: 가격이 월간 <strong>+1σ(대략 76,829.8~76,894.4)</strong> 위에 있어 <strong>중기 바이어스는 롱 우위</strong>. 이 구간 이탈 시 <strong>VWAP(약 73,247~73,384)</strong> 쪽 평균회귀 여지가 커짐.</li>
+</ul>
+<h4>5. 매매 시나리오 <em>(확률은 정성 추정, 5% 단위 / 합 100%)</em></h4>
+<ul>
+<li><strong>시나리오 A — 상승 추세 재개 스윙(30%)</strong></li>
+<li>트리거: <strong>1H EMA20(78,069.5) 회복</strong> 후 <strong>15m EMA50(78,001.1)</strong> 지지 확인</li>
+<li>진입: <strong>78,001.1</strong> 부근(리테스트 확인 시)</li>
+<li>손절: <strong>77,088.7(1H EMA200)</strong> 하향 이탈</li>
+<li>익절: 1차 <strong>80,275.9(1D +2σ)</strong> / 2차 <strong>82,399.7(1D EMA200)</strong></li>
+<li>R:R(대략): TP1 <strong>~2.5</strong>, TP2 <strong>~4.8</strong></li>
+<li><strong>시나리오 B — 눌림 매수(단타/스윙 시드) (35%)</strong></li>
+<li>트리거: <strong>77,121.3(4H EMA50)</strong> ~ <strong>77,088.7(1H EMA200)</strong> 구간 지지 + 1H StochRSI가 과매도권에서 이탈(20 상향 돌파) 시도</li>
+<li>진입: <strong>77,121.3</strong> 부근(지지 확인 시)</li>
+<li>손절: <strong>76,829.8(1D +1σ)</strong> 하향 이탈</li>
+<li>익절: 1차 <strong>77,844.2(4H EMA20)</strong> / 2차 <strong>78,001.1(15m EMA50)</strong> 또는 <strong>78,069.5(1H EMA20)</strong></li>
+<li>R:R(대략): TP1 <strong>~2.5</strong>, TP2 <strong>~3.0~3.3</strong></li>
+<li><strong>시나리오 C — +1σ 이탈 후 평균회귀 숏(역추세 단타/헤지) (20%)</strong></li>
+<li>트리거: <strong>76,829.8(1D +1σ)</strong> 하향 이탈 후 리테스트에서 저항 확인 + 1H CVD 우하향 지속</li>
+<li>진입: <strong>76,829.8</strong> 리테스트 실패 구간</li>
+<li>손절: <strong>77,088.7(1H EMA200)</strong> 상향 회복</li>
+<li>익절: 1차 <strong>75,585.9(1D EMA100)</strong> / 2차 <strong>75,318.2(1D EMA20)</strong> / 확장 <strong>73,383.8(1D VWAP)</strong></li>
+<li>R:R(대략): TP1 <strong>~4.8</strong>, TP2 <strong>~5.8</strong></li>
+<li><strong>시나리오 D — 노트레이드/대기(15%)</strong></li>
+<li>조건: <strong>77,088.7 ~ 78,069.5</strong> 박스에서 OI는 증가하지만 CVD가 혼조(방향성 불명)일 때 → <strong>돌파/이탈 후 재확인까지 대기</strong>가 유리</li>
+</ul>
+<h4>6. 리스크 요인</h4>
+<ul>
+<li><strong>장기 저항 잔존</strong>: 1D에서 <strong>EMA200(82,399.7)</strong> 하방 → 랠리 구간마다 상단이 저항화될 수 있음.</li>
+<li><strong>단기 모멘텀 약화</strong>: 1H/15m에서 가격이 단기 EMA들 아래 + MACD 약세 → <strong>눌림이 길어질 수 있음</strong>.</li>
+<li><strong>레버리지 축적</strong>: OI가 전 TF에서 <strong>255K대 증가</strong> → 변동성 확대(청산성 급등락) 리스크.</li>
+<li><strong>수급 확인 필요</strong>: LTF에서 <strong>Spot CVD 우하향</strong>이어서, 반등은 <strong>체결(특히 현물) 동반 확인</strong> 전까지 신뢰도 낮음.</li>
+<li><strong>가시성 한계</strong>: VRVP(POC/HVN/LVN)와 인트라 거래량 라벨이 판독 불가 구간이 있어 S/R은 <strong>EMA·VWAP 밴드 중심</strong>으로만 보수적으로 판단 필요.</li>
+</ul>
+<p><em>본 분석은 정보 제공 목적이며 투자 조언이 아닙니다.</em></p>
+    </article>
+  </main>
+</body>
+</html>
