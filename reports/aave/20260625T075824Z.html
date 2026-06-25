@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AAVE Market Report — Coin Reports</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+:root {
+  --bg: #08090f;
+  --bg-panel: #0e1118;
+  --bg-card: #131720;
+  --bg-hover: #1a2030;
+  --border: #1e2535;
+  --border-hi: #2a3550;
+  --accent: #f7931a;
+  --accent-dim: rgba(247,147,26,.12);
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,.12);
+  --blue: #3b82f6;
+  --blue-dim: rgba(59,130,246,.12);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,.12);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,.12);
+  --text-1: #e8eaf0;
+  --text-2: #8b93a8;
+  --text-3: #4a5268;
+  --text-hi: #fff;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+  --sans: 'Inter', 'Apple SD Gothic Neo', system-ui, sans-serif;
+}
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: .18;
+  pointer-events: none;
+  z-index: 0;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,9,15,.9);
+  backdrop-filter: blur(10px);
+}
+.topbar-left, .topbar-right, .topbar-brand, .back-link {
+  display: flex;
+  align-items: center;
+}
+.topbar-left { gap: 14px; }
+.topbar-right { gap: 12px; }
+.topbar-brand, .back-link { gap: 7px; text-decoration: none; }
+.back-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  transition: color .15s;
+}
+.back-link:hover { color: var(--text-2); }
+.back-link svg { width: 12px; height: 12px; }
+.sep { color: var(--border); font-size: 16px; font-weight: 300; }
+.brand-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #000;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+.brand-name {
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.live-dot {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.live-dot::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 5px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+.model-pill {
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.shell {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 80px;
+}
+.report-header {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 260px;
+  gap: 14px;
+  align-items: stretch;
+  margin-bottom: 14px;
+}
+.header-main, .meta-panel, .card, .report-section {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-card);
+}
+.header-main {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(20px,3.5vw,36px);
+}
+.header-main::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent 60%);
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--accent);
+}
+.report-title {
+  margin-bottom: 14px;
+  color: var(--text-hi);
+  font-size: clamp(30px,5.5vw,58px);
+  font-weight: 300;
+  letter-spacing: -.04em;
+  line-height: 1.1;
+}
+.report-title strong { color: var(--accent); font-weight: 700; }
+.hero-copy {
+  max-width: 560px;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.meta-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.meta-row:last-child { border-bottom: 0; }
+.meta-label {
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.meta-value {
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.meta-value.accent { color: var(--accent); }
+.notice-row {
+  padding: 12px 18px;
+  color: var(--text-3);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: 220px minmax(0,1fr) minmax(0,1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.card { padding: 20px; }
+.price-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.price-label, .card-title {
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.price-value {
+  margin-top: 6px;
+  color: var(--text-hi);
+  font-family: var(--mono);
+  font-size: clamp(28px,4.5vw,42px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+}
+.price-unit {
+  margin-top: 2px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.price-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.ptag {
+  padding: 3px 8px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.ptag.bull { color: var(--green); border-color: rgba(34,197,94,.25); background: var(--green-dim); }
+.ptag.bear { color: var(--red); border-color: rgba(239,68,68,.25); background: var(--red-dim); }
+.ptag.neu { color: var(--amber); border-color: rgba(245,158,11,.25); background: var(--amber-dim); }
+.card-title {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.brief-list, .body-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+.brief-list li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: 13px;
+}
+.brief-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.scenario-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 36px;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.scenario-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.s-label {
+  overflow: hidden;
+  color: var(--text-2);
+  font-family: var(--mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.s-bar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--border);
+}
+.s-bar span {
+  display: block;
+  width: var(--p);
+  height: 100%;
+  border-radius: inherit;
+}
+.s-bar.bar-green span { background: var(--green); }
+.s-bar.bar-blue span { background: var(--blue); }
+.s-bar.bar-red span { background: var(--red); }
+.s-bar.bar-amber span { background: var(--amber); }
+.s-pct {
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  text-align: right;
+}
+.s-pct.green { color: var(--green); }
+.s-pct.blue { color: var(--blue); }
+.s-pct.red { color: var(--red); }
+.s-pct.amber { color: var(--amber); }
+.toc {
+  position: sticky;
+  top: 50px;
+  z-index: 10;
+  margin-bottom: 14px;
+  padding: 8px 0;
+  background: linear-gradient(180deg, var(--bg) 75%, transparent);
+}
+.toc-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(8,9,15,.92);
+  backdrop-filter: blur(8px);
+}
+.toc-label {
+  margin-right: 4px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.toc a {
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.toc a:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+.article-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 14px 2px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.article-heading::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--accent);
+}
+.article-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.report-section {
+  scroll-margin-top: 72px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12px;
+  padding: clamp(18px,3vw,26px);
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border: 1px solid rgba(247,147,26,.2);
+  border-radius: 5px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+}
+.section-title {
+  color: var(--text-hi);
+  font-size: clamp(15px,2.4vw,18px);
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+.body-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: clamp(13px,2.1vw,15px);
+  line-height: 1.7;
+}
+.body-list li:first-child { padding-top: 0; }
+.body-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+strong { color: var(--text-1); font-weight: 500; }
+em { color: var(--text-3); font-style: normal; }
+code {
+  padding: .06em .3em;
+  border: 1px solid var(--border-hi);
+  border-radius: 4px;
+  background: var(--bg-panel);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: .84em;
+}
+p { color: var(--text-2); }
+hr { border: 0; height: 1px; background: var(--border); margin: 2rem 0; }
+footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+@media (max-width: 780px) {
+  .report-header { grid-template-columns: 1fr; }
+  .meta-panel { flex-direction: row; overflow-x: auto; }
+  .meta-row { flex: 1; min-width: 120px; border-bottom: 0; border-right: 1px solid var(--border); }
+  .meta-row:last-child { border-right: 0; }
+}
+@media (max-width: 640px) {
+  .shell { width: calc(100% - 20px); padding-top: 16px; }
+  .dashboard { grid-template-columns: 1fr; }
+  .topbar { padding: 11px 14px; }
+  .model-pill { display: none; }
+  .toc { top: 48px; }
+  .toc-inner { overflow-x: auto; flex-wrap: nowrap; }
+  footer { flex-direction: column; gap: 6px; align-items: flex-start; }
+}
+
+  </style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back-link" href="../../index.html">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M8 2L4 6l4 4"/>
+      </svg>
+      back
+    </a>
+    <span class="sep">/</span>
+    <a class="topbar-brand" href="../../index.html">
+      <div class="brand-icon">₿</div>
+      <span class="brand-name">Coin Reports</span>
+    </a>
+  </div>
+  <div class="topbar-right">
+    <span class="live-dot">LIVE</span>
+    <span class="model-pill">v2-vision-codex</span>
+  </div>
+</div>
+
+<main class="shell">
+  <div class="report-header">
+    <div class="header-main">
+      <div class="eyebrow">v2-vision-codex report</div>
+      <h1 class="report-title">AAVE <strong>Market</strong><br>Report</h1>
+      <p class="hero-copy">숫자는 차트 라벨 추출값을 우선하고, 판단은 지표 조합 가이드로 정리한 리포트입니다.</p>
+    </div>
+    <div class="meta-panel">
+      <div class="meta-row">
+        <span class="meta-label">Asset</span>
+        <span class="meta-value accent">AAVE / USD</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Generated</span>
+        <span class="meta-value">2026-06-25 16:58 KST</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Model</span>
+        <span class="meta-value">v2-vision-codex</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">Multi-TF Analysis</span>
+      </div>
+      <div class="notice-row">Public report. Not financial advice.</div>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <div class="card price-card">
+      <div>
+        <div class="price-label">Current Price</div>
+        <div class="price-value">N/A</div>
+        <div class="price-unit">USD · extracted label</div>
+      </div>
+      <div class="price-tags">
+<span class="ptag bull">EMA50 위</span>
+      </div>
+    </div>
+<div class="card brief-card" aria-label="Market brief">
+<div class="card-title">Market Brief</div>
+<ul class="brief-list"><li><strong>스퀴즈 Thesis: 양방향 경합.</strong></li></ul>
+</div>
+
+  </div>
+
+<nav class="toc" aria-label="Report sections"><div class="toc-inner">
+<span class="toc-label">목차</span>
+<a href="#section-1">1. HTF 전체 방향 (1D)</a>
+<a href="#section-2">2. MTF 상세 분석 (4H / 1H)</a>
+<a href="#section-3">3. LTF 실행 확인 (15m / 5m)</a>
+<a href="#section-4">4. Volume + Candle + S/R + Trendline 맵</a>
+<a href="#section-5">5. 크로스 피쳐 종합</a>
+<a href="#section-6">6. 매매 시나리오</a>
+<a href="#section-7">7. 리스크 요인</a>
+</div></nav>
+
+  <article>
+<div class="article-heading">📊 AAVE 종합 분석</div>
+<p>&gt; 캡처 시작: 2026-06-25 16:18:43 KST / 2026-06-25 07:18:43 UTC &gt; 분석 생성: 2026-06-25 16:58:24 KST / 2026-06-25 07:58:24 UTC</p>
+<section class="report-section" id="section-1">
+<div class="section-heading">
+<span class="section-num">01</span>
+<span class="section-title">1. HTF 전체 방향 (1D)</span>
+</div>
+<ul class="body-list">
+<li>1D/4H 구조화 값은 판독 불가라 확정 근거로 쓰지 않습니다. 이번 분석의 상위 기준은 <strong>1H</strong>입니다.</li>
+<li>1H 가격은 <strong>82.22</strong>, EMA는 <strong>20 79.23 / 50 76.58 / 100 75.40 / 200 74.17</strong>로 정배열입니다. 가격은 모든 1H EMA 위라 추세 배경은 상승입니다.</li>
+<li>다만 OI가 <strong>2.052M</strong>, visible range high, 강한 상승/가속 상태라 신규 포지션 과밀이 큽니다.</li>
+<li>Spot CVD는 <strong>90.525K</strong>로 우상향인데, 1H Futs CVD는 <strong>-3.797K</strong>, 최근 하락 + spike_then_fade입니다. 현물 매수는 강하지만 선물 추격 매수는 약해졌고, 고점권 흡수/분배 리스크가 있습니다.</li>
+<li>핵심 저항은 <strong>83.6~85.1</strong>, 그 위는 <strong>90.0 / 93.8 근처</strong>. 핵심 지지는 <strong>81.0~80.5</strong>, 그 아래 <strong>79.2 / 77.2~76.4</strong>입니다.</li>
+</ul>
+</section>
+<section class="report-section" id="section-2">
+<div class="section-heading">
+<span class="section-num">02</span>
+<span class="section-title">2. MTF 상세 분석 (4H / 1H)</span>
+</div>
+<ul class="body-list">
+<li>4H는 판독값이 없어 제외합니다.</li>
+<li>1H는 상승 추세가 강합니다. 최근 캔들은 청록 중간 몸통 + 하단 꼬리, 거래량 <strong>108.88K</strong>로 강한 편입니다.</li>
+<li>1H RSI는 <strong>63.37</strong>, RSI EMA12 <strong>64.74</strong>로 RSI가 평균선 아래에 살짝 밀렸고, StochRSI는 <strong>K 64.84 / D 81.10</strong>으로 과열권에서 식는 중입니다.</li>
+<li>1H MACD는 <strong>2.40 &gt; Signal 2.06</strong>, Histogram <strong>0.34</strong>라 큰 모멘텀은 아직 양수입니다.</li>
+<li>Monthly VWAP은 정책상 사용 가능입니다. 화면상 VWAP 중심은 <strong>70.8 근처</strong>, +1σ <strong>77.2</strong>, +2σ <strong>83.6</strong>, +3σ <strong>90.0 근처</strong>로 보입니다. 현재가는 +2σ 부근이라 추격 롱은 과열 구간입니다.</li>
+<li>VRVP는 <strong>72~77대</strong>에 두꺼운 거래량대가 있고, 현재 <strong>82~84대</strong>도 상단 매물/거래량 구간입니다.</li>
+</ul>
+</section>
+<section class="report-section" id="section-3">
+<div class="section-heading">
+<span class="section-num">03</span>
+<span class="section-title">3. LTF 실행 확인 (15m / 5m)</span>
+</div>
+<ul class="body-list">
+<li>15m 가격은 <strong>82.19</strong>, EMA20 <strong>82.29</strong> 바로 아래, EMA50 <strong>80.47</strong> 위입니다. 단기 추세는 상승 후 조정입니다.</li>
+<li>15m RSI <strong>52.02</strong>, RSI EMA12 <strong>57.04</strong>, MACD <strong>0.57 &lt; Signal 0.93</strong>, Histogram <strong>-0.36</strong>으로 단기 모멘텀은 식었습니다.</li>
+<li>15m StochRSI는 <strong>K 10.72 / D 5.09</strong>라 과매도권에서 반등 시도입니다.</li>
+<li>5m 가격은 <strong>82.23</strong>, EMA20 <strong>82.38</strong>, EMA50 <strong>82.45</strong> 아래로 단기 저항을 아직 회복하지 못했습니다. EMA100 <strong>81.47</strong> 위는 지키고 있습니다.</li>
+<li>5m는 직전 저점 테스트 후 회복했지만 윗꼬리와 고점 갱신 실패가 있어, <strong>82.45 위 회복 유지</strong>가 단기 롱 확인 조건입니다.</li>
+</ul>
+</section>
+<section class="report-section" id="section-4">
+<div class="section-heading">
+<span class="section-num">04</span>
+<span class="section-title">4. Volume + Candle + S/R + Trendline 맵</span>
+</div>
+<ul class="body-list">
+<li>거래량 상태: 1D/4H unreadable, 1H <strong>108.88K high</strong>, 15m <strong>18.73K low</strong>, 5m <strong>19.54K high</strong>. 큰 흐름은 1H 돌파 거래량이 유효하지만, 15m 추격 거래량은 약합니다.</li>
+<li>캔들 힘: 1H는 bullish, 15m는 neutral, 5m는 neutral입니다. 즉 “큰 추세는 상방, 단기 실행은 확인 필요”입니다.</li>
+<li>위쪽 저항: <strong>83.6~84.0</strong> Monthly +2σ/VRVP 상단, <strong>85.0~85.1</strong> swing high, 이후 <strong>90.0</strong>, <strong>93.8 근처</strong>.</li>
+<li>아래쪽 지지: <strong>82.0~81.5</strong> 5m 회복/EMA100 구간, <strong>80.5~80.4</strong> 15m EMA50, <strong>79.2</strong> 1H EMA20, <strong>77.2~76.4</strong> VWAP +1σ/15m EMA200/1H EMA50 confluence.</li>
+<li>추세선: 상승 힌트, confidence <strong>medium</strong>. 단독 근거가 아니라 EMA 정배열과 S/R 반응의 보조 근거로만 사용합니다.</li>
+</ul>
+</section>
+<section class="report-section" id="section-5">
+<div class="section-heading">
+<span class="section-num">05</span>
+<span class="section-title">5. 크로스 피쳐 종합</span>
+</div>
+<ul class="body-list">
+<li><strong>스퀴즈 Thesis: 양방향 경합.</strong></li>
+<p>OI는 강하게 증가하고 가격은 상승했지만, 1H Futs CVD가 하락/페이드라 선물 추격 매수 신뢰가 낮습니다. 반면 Funding은 <strong>-0.0350 / -0.0349</strong>로 음수 극단에 가까워 숏 비용 부담, 즉 숏커버 연료가 있습니다.</p>
+<li>LSR은 <strong>1H ratio 1.960, long 약 66.22% / short 약 33.78%</strong>, 15m도 long 약 <strong>66.11%</strong>로 롱 계정 우세입니다. 많은 계정은 롱 쪽에 몰렸지만 Funding은 음수라, “다수 소액 롱 + 일부 큰 숏/선물 매도 흡수” 가능성이 있습니다.</li>
+<li>결론: <strong>83.6~85.1을 회복하면 숏커버 롱</strong>, <strong>81.0~80.5를 잃으면 고점 롱 정리/롱스퀴즈 숏</strong>입니다. 현재는 방향 우세보다 트리거 대기 구간입니다.</li>
+</ul>
+</section>
+<section class="report-section" id="section-6">
+<div class="section-heading">
+<span class="section-num">06</span>
+<span class="section-title">6. 매매 시나리오</span>
+</div>
+<p>각 주문 조각은 별도 SL/TP 수량으로 관리합니다.</p>
+<p><strong>시나리오 A: 롱(숏커버 재돌파) — 확률 35%</strong> 핵심 가설: 음수 Funding + Spot CVD 상승 + 가격이 81~80.5를 방어하면, 83.6 돌파 시 숏커버가 붙을 수 있습니다.</p>
+<ul class="body-list">
+<li>공격 진입:</li>
+<p>조건: 소액 스퀴즈 베팅: 5m가 82.45 위를 회복하고 다음 5m에서 82.3~82.5를 지지하면 진입 후보, 83.0 재돌파 시 일부 실행. Entry point: 82.6~83.0 TP, Hard SL: TP1 83.6, TP2 85.1, Hard SL 80.8(근거: 5m swing low 80.9 하단 + buffer), 손절폭 약 2.4~2.7%, R:R 약 0.3/1.0, 비중 15~20%, 계좌 10,000달러에서 50달러 리스크면 notional 약 1,850~2,000달러 이하.</p>
+</ul>
+<ul class="body-list">
+<li>확인 진입:</li>
+<p>조건: 15m 종가가 83.6 위에서 닫히고, 다음 5m 리테스트가 83.3~83.6을 지키면 본진입. Entry point: 83.6~83.9 TP, Hard SL: TP1 85.1, TP2 90.0, Hard SL 81.9(근거: 돌파선 실패와 82대 재진입 무효화), 손절폭 약 2.0~2.4%, R:R 약 0.7/3.0, 비중 40%.</p>
+</ul>
+<ul class="body-list">
+<li>눌림 진입:</li>
+<p>조건: 83.6 돌파가 먼저 나온 뒤 82.3~82.5로 되돌림, 5m 하단 꼬리와 EMA20/50 재회복이 나오면 대기 진입. Entry point: 82.3~82.6 TP, Hard SL: TP1 85.1, TP2 90.0, Hard SL 80.7(근거: 80.9 sweep low와 80.5 지지 하단 이탈), 손절폭 약 2.0~2.3%, R:R 약 1.3/4.0, 비중 25%.</p>
+</ul>
+<p><strong>시나리오 B: 숏(81.0~80.5 이탈 롱스퀴즈) — 확률 35%</strong> 핵심 가설: OI 고점권 + LSR 롱 계정 우세 + 1H Futs CVD 페이드 상태에서 81.0~80.5가 무너지면 고점 롱 정리가 빨라질 수 있습니다.</p>
+<ul class="body-list">
+<li>공격 진입:</li>
+<p>조건: 진입 후보는 5m가 81.0을 훑고 반등 실패, 진입 확인은 다음 5m에서 81.0 아래 유지 또는 81.0~81.3 리테스트 실패. Entry point: 80.8~81.0 TP, Hard SL: TP1 79.2, TP2 77.2, Hard SL 82.6(근거: 이탈선 위 재회복 + 5m EMA20/50 회복), 손절폭 약 2.0~2.2%, R:R 약 0.9/2.2, 비중 25%.</p>
+</ul>
+<ul class="body-list">
+<li>확인 진입:</li>
+<p>조건: 15m 종가가 80.5 아래에서 닫히고, 5m 반등이 80.5~81.0에서 막힌 뒤 재하락하면 본진입. Entry point: 80.3~80.5 TP, Hard SL: TP1 79.2, TP2 77.2, Hard SL 82.0(근거: 80.5 이탈선 회복과 리테스트 고점 상단), 손절폭 약 1.9~2.1%, R:R 약 0.6/1.9, 비중 40%.</p>
+</ul>
+<ul class="body-list">
+<li>눌림 진입:</li>
+<p>조건: 80.5 이탈이 먼저 나온 뒤 81.0~81.5가 저항으로 바뀌고, 5m 상단 꼬리/음봉 거래량이 붙으면 진입. Entry point: 81.0~81.4 TP, Hard SL: TP1 79.2, TP2 77.2, Hard SL 82.8(근거: 리테스트 저항 상단과 5m EMA50 회복), 손절폭 약 1.7~2.2%, R:R 약 1.0/2.3, 비중 25%.</p>
+</ul>
+<p><strong>시나리오 C: 노트레이드/레인지 대기 — 확률 30%</strong></p>
+<ul class="body-list">
+<li>진입 없음.</li>
+<li>81.0~83.6 안에서 5m가 위아래로 흔들리면 OI 과밀만 커지고 손익비가 나빠집니다.</li>
+<li>83.6 돌파 유지 또는 80.5 이탈 유지 중 하나가 나오기 전까지는 방향 베팅보다 대기 우선입니다.</li>
+</ul>
+</section>
+<section class="report-section" id="section-7">
+<div class="section-heading">
+<span class="section-num">07</span>
+<span class="section-title">7. 리스크 요인</span>
+</div>
+<ul class="body-list">
+<li>OI가 고점권에서 계속 증가 중이라 돌파/이탈 실패 시 청산성 변동이 큽니다.</li>
+<li>Funding 음수는 숏커버 연료지만, LSR은 롱 계정 우세라 롱도 안전하지 않습니다.</li>
+<li>83.6 위 유지 실패는 롱 시나리오 약화, 85.1 돌파 실패 후 82.5 재이탈은 분배 신호입니다.</li>
+<li>80.5 아래 이탈 실패 후 81.5 회복은 숏 시나리오 무효화에 가깝습니다.</li>
+<li>현재 핵심은 방향 예측이 아니라 <strong>83.6 위 안착 vs 80.5 아래 안착</strong>입니다.</li>
+</ul>
+</section>
+  </article>
+
+  <footer>
+    <span>© 2025 coin-reports · Generated by v2-vision-codex</span>
+    <span>Not financial advice — informational purposes only</span>
+  </footer>
+</main>
+</body>
+</html>
