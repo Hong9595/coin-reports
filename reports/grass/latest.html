@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GRASS Market Report — Coin Reports</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+:root {
+  --bg: #08090f;
+  --bg-panel: #0e1118;
+  --bg-card: #131720;
+  --bg-hover: #1a2030;
+  --border: #1e2535;
+  --border-hi: #2a3550;
+  --accent: #f7931a;
+  --accent-dim: rgba(247,147,26,.12);
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,.12);
+  --blue: #3b82f6;
+  --blue-dim: rgba(59,130,246,.12);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,.12);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,.12);
+  --text-1: #e8eaf0;
+  --text-2: #8b93a8;
+  --text-3: #4a5268;
+  --text-hi: #fff;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+  --sans: 'Inter', 'Apple SD Gothic Neo', system-ui, sans-serif;
+}
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: .18;
+  pointer-events: none;
+  z-index: 0;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,9,15,.9);
+  backdrop-filter: blur(10px);
+}
+.topbar-left, .topbar-right, .topbar-brand, .back-link {
+  display: flex;
+  align-items: center;
+}
+.topbar-left { gap: 14px; }
+.topbar-right { gap: 12px; }
+.topbar-brand, .back-link { gap: 7px; text-decoration: none; }
+.back-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  transition: color .15s;
+}
+.back-link:hover { color: var(--text-2); }
+.back-link svg { width: 12px; height: 12px; }
+.sep { color: var(--border); font-size: 16px; font-weight: 300; }
+.brand-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #000;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+.brand-name {
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.live-dot {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.live-dot::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 5px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+.model-pill {
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.shell {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 80px;
+}
+.report-header {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 260px;
+  gap: 14px;
+  align-items: stretch;
+  margin-bottom: 14px;
+}
+.header-main, .meta-panel, .card, .report-section {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-card);
+}
+.header-main {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(20px,3.5vw,36px);
+}
+.header-main::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent 60%);
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--accent);
+}
+.report-title {
+  margin-bottom: 14px;
+  color: var(--text-hi);
+  font-size: clamp(30px,5.5vw,58px);
+  font-weight: 300;
+  letter-spacing: -.04em;
+  line-height: 1.1;
+}
+.report-title strong { color: var(--accent); font-weight: 700; }
+.hero-copy {
+  max-width: 560px;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.meta-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.meta-row:last-child { border-bottom: 0; }
+.meta-label {
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.meta-value {
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.meta-value.accent { color: var(--accent); }
+.notice-row {
+  padding: 12px 18px;
+  color: var(--text-3);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: 220px minmax(0,1fr) minmax(0,1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.card { padding: 20px; }
+.price-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.price-label, .card-title {
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.price-value {
+  margin-top: 6px;
+  color: var(--text-hi);
+  font-family: var(--mono);
+  font-size: clamp(28px,4.5vw,42px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+}
+.price-unit {
+  margin-top: 2px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.price-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.ptag {
+  padding: 3px 8px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.ptag.bull { color: var(--green); border-color: rgba(34,197,94,.25); background: var(--green-dim); }
+.ptag.bear { color: var(--red); border-color: rgba(239,68,68,.25); background: var(--red-dim); }
+.ptag.neu { color: var(--amber); border-color: rgba(245,158,11,.25); background: var(--amber-dim); }
+.card-title {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.brief-list, .body-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+.brief-list li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: 13px;
+}
+.brief-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.scenario-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 36px;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.scenario-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.s-label {
+  overflow: hidden;
+  color: var(--text-2);
+  font-family: var(--mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.s-bar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--border);
+}
+.s-bar span {
+  display: block;
+  width: var(--p);
+  height: 100%;
+  border-radius: inherit;
+}
+.s-bar.bar-green span { background: var(--green); }
+.s-bar.bar-blue span { background: var(--blue); }
+.s-bar.bar-red span { background: var(--red); }
+.s-bar.bar-amber span { background: var(--amber); }
+.s-pct {
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  text-align: right;
+}
+.s-pct.green { color: var(--green); }
+.s-pct.blue { color: var(--blue); }
+.s-pct.red { color: var(--red); }
+.s-pct.amber { color: var(--amber); }
+.toc {
+  position: sticky;
+  top: 50px;
+  z-index: 10;
+  margin-bottom: 14px;
+  padding: 8px 0;
+  background: linear-gradient(180deg, var(--bg) 75%, transparent);
+}
+.toc-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(8,9,15,.92);
+  backdrop-filter: blur(8px);
+}
+.toc-label {
+  margin-right: 4px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.toc a {
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.toc a:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+.article-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 14px 2px;
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.article-heading::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--accent);
+}
+.article-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.report-section {
+  scroll-margin-top: 72px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12px;
+  padding: clamp(18px,3vw,26px);
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border: 1px solid rgba(247,147,26,.2);
+  border-radius: 5px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+}
+.section-title {
+  color: var(--text-hi);
+  font-size: clamp(15px,2.4vw,18px);
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+.body-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: clamp(13px,2.1vw,15px);
+  line-height: 1.7;
+}
+.body-list li:first-child { padding-top: 0; }
+.body-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+strong { color: var(--text-1); font-weight: 500; }
+em { color: var(--text-3); font-style: normal; }
+code {
+  padding: .06em .3em;
+  border: 1px solid var(--border-hi);
+  border-radius: 4px;
+  background: var(--bg-panel);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: .84em;
+}
+p { color: var(--text-2); }
+hr { border: 0; height: 1px; background: var(--border); margin: 2rem 0; }
+footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-3);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+@media (max-width: 780px) {
+  .report-header { grid-template-columns: 1fr; }
+  .meta-panel { flex-direction: row; overflow-x: auto; }
+  .meta-row { flex: 1; min-width: 120px; border-bottom: 0; border-right: 1px solid var(--border); }
+  .meta-row:last-child { border-right: 0; }
+}
+@media (max-width: 640px) {
+  .shell { width: calc(100% - 20px); padding-top: 16px; }
+  .dashboard { grid-template-columns: 1fr; }
+  .topbar { padding: 11px 14px; }
+  .model-pill { display: none; }
+  .toc { top: 48px; }
+  .toc-inner { overflow-x: auto; flex-wrap: nowrap; }
+  footer { flex-direction: column; gap: 6px; align-items: flex-start; }
+}
+
+  </style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back-link" href="../../index.html">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M8 2L4 6l4 4"/>
+      </svg>
+      back
+    </a>
+    <span class="sep">/</span>
+    <a class="topbar-brand" href="../../index.html">
+      <div class="brand-icon">₿</div>
+      <span class="brand-name">Coin Reports</span>
+    </a>
+  </div>
+  <div class="topbar-right">
+    <span class="live-dot">LIVE</span>
+    <span class="model-pill">v2-vision-codex</span>
+  </div>
+</div>
+
+<main class="shell">
+  <div class="report-header">
+    <div class="header-main">
+      <div class="eyebrow">v2-vision-codex report</div>
+      <h1 class="report-title">GRASS <strong>Market</strong><br>Report</h1>
+      <p class="hero-copy">숫자는 차트 라벨 추출값을 우선하고, 판단은 지표 조합 가이드로 정리한 리포트입니다.</p>
+    </div>
+    <div class="meta-panel">
+      <div class="meta-row">
+        <span class="meta-label">Asset</span>
+        <span class="meta-value accent">GRASS / USD</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Generated</span>
+        <span class="meta-value">2026-07-03 22:46 KST</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Model</span>
+        <span class="meta-value">v2-vision-codex</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">Multi-TF Analysis</span>
+      </div>
+      <div class="notice-row">Public report. Not financial advice.</div>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <div class="card price-card">
+      <div>
+        <div class="price-label">Current Price</div>
+        <div class="price-value">N/A</div>
+        <div class="price-unit">USD · extracted label</div>
+      </div>
+      <div class="price-tags">
+
+      </div>
+    </div>
+
+
+  </div>
+
+<nav class="toc" aria-label="Report sections"><div class="toc-inner">
+<span class="toc-label">목차</span>
+<a href="#section-1">1. HTF 전체 방향 (1D)</a>
+<a href="#section-2">2. MTF 상세 분석 (4H / 1H)</a>
+<a href="#section-3">3. LTF 실행 확인 (15m / 5m)</a>
+<a href="#section-4">4. Volume + Candle + S/R + Trendline 맵</a>
+<a href="#section-5">5. 크로스 피쳐 종합</a>
+<a href="#section-6">6. 매매 시나리오</a>
+<a href="#section-7">7. 리스크 요인</a>
+</div></nav>
+
+  <article>
+<div class="article-heading">📊 GRASS 종합 분석</div>
+<p>&gt; 캡처 시작: 2026-07-03 22:40:27 KST / 2026-07-03 13:40:27 UTC &gt; 분석 생성: 2026-07-03 22:46:17 KST / 2026-07-03 13:46:17 UTC</p>
+<section class="report-section" id="section-1">
+<div class="section-heading">
+<span class="section-num">01</span>
+<span class="section-title">1. HTF 전체 방향 (1D)</span>
+</div>
+<p>1D/4H 데이터는 이번 캡처에서 판독 불가입니다. 따라서 상위 방향은 1H를 기준으로만 제한적으로 봅니다. 1H 가격은 <code>0.5854</code>로 EMA20 <code>0.5319</code>, EMA50 <code>0.5117</code>, EMA100 <code>0.4987</code>, EMA200 <code>0.4845</code> 위에 있어 단기 추세는 강한 상승 정배열입니다. 다만 최근 고점 <code>~0.60</code> 부근에서 대량 거래량 <code>3.05M</code>과 함께 윗꼬리/음봉성 피로가 나와 추격 롱은 위험합니다.</p>
+</section>
+<section class="report-section" id="section-2">
+<div class="section-heading">
+<span class="section-num">02</span>
+<span class="section-title">2. MTF 상세 분석 (4H / 1H)</span>
+</div>
+<p>4H는 판독 불가입니다. 1H 기준으로는 가격 상승 + OI 급증 구조입니다. OI는 <code>98.111M</code>, visible range high, 강한 상승 추세지만 최신 봉은 빨강이고 가속은 둔화 중입니다. 즉 신규 포지션이 많이 들어왔지만 고점권 포화 신호가 같이 있습니다.</p>
+<p>1H 모멘텀은 RSI <code>74.2797</code>, RSI EMA12 <code>63.5684</code>, StochRSI K/D <code>97.2763 / 96.1348</code>로 과열권입니다. MACD는 <code>0.0184 &gt; Signal 0.0101</code>, histogram <code>0.0082</code>라 상승 모멘텀은 살아 있지만, 이미 상단 과열입니다. VWAP Month와 밴드는 월초 구간이라 방향성/SR/목표가 근거에서 제외합니다. VRVP 기준으로는 <code>0.5291</code> POC, <code>0.4835</code>, <code>0.4455</code> HVN이 아래 지지 후보입니다.</p>
+</section>
+<section class="report-section" id="section-3">
+<div class="section-heading">
+<span class="section-num">03</span>
+<span class="section-title">3. LTF 실행 확인 (15m / 5m)</span>
+</div>
+<p>15m 현재가는 <code>0.5855</code>, EMA20 <code>0.5634</code>, EMA50 <code>0.5388</code>, EMA100 <code>0.5236</code>, EMA200 <code>0.5096</code> 위입니다. 추세는 강하지만, 최근 캔들은 작은 음봉 + 윗꼬리 + 거래량 급증 <code>623.39K</code>로 단기 과열/소진입니다. 15m RSI <code>76.7453</code>도 과매수권이고, StochRSI는 K <code>41.5207</code>이 D <code>63.8552</code> 아래로 꺾여 단기 모멘텀 둔화가 있습니다.</p>
+<p>5m는 <code>0.60</code> 돌파 시도 후 <code>0.586</code> 부근으로 눌린 상태입니다. 5m EMA는 방향 근거로 쓰지 않고 실행 확인만 보면, 급등 후 거래량 확대와 작은 몸통/양방향 꼬리가 보여 즉시 추격보다 <code>0.585~0.60</code> 재돌파 유지 또는 <code>0.563~0.568</code> 눌림 지지 확인이 필요합니다.</p>
+</section>
+<section class="report-section" id="section-4">
+<div class="section-heading">
+<span class="section-num">04</span>
+<span class="section-title">4. Volume + Candle + S/R + Trendline 맵</span>
+</div>
+<p>거래량 상태: 1D/4H는 unreadable. 1H는 <code>3.05M</code>으로 high, 15m는 <code>623.39K</code>로 high, 5m는 수치 unreadable이나 최근 막대 기준 high 시각 보조 판정입니다. 의미는 명확합니다. 돌파는 거래량을 동반했지만, 고점권에서 피로 캔들이 함께 나왔습니다.</p>
+<p>캔들 힘: 1H는 큰 몸통 이후 윗꼬리와 고점권 음봉성 반응으로 <code>exhaustion</code>. 15m도 <code>0.60</code> 부근에서 작은 음봉과 윗꼬리라 추격 매수 실패 가능성이 있습니다. 5m는 중립, 급등 후 숨 고르기입니다.</p>
+<p>S/R 맵:</p>
+<ul class="body-list">
+<li>위쪽 저항: <code>0.6000~0.6010</code> 최근 swing high. 이 위에서 15m 종가 유지가 안 나오면 고점 롱 유인 구간입니다.</li>
+<li>중간 지지: <code>0.5850~0.5860</code> 현재가/단기 균형선. 5m에서 이 구간을 잃으면 급등 유지 실패입니다.</li>
+<li>1차 하단 지지: <code>0.5630~0.5685</code> 15m EMA20/5m EMA50 인근, 단기 눌림 방어 구간.</li>
+<li>2차 하단 지지: <code>0.5290~0.5320</code> 1H POC <code>0.5291</code> + 1H EMA20 <code>0.5319</code>.</li>
+<li>깊은 지지: <code>0.5090~0.5120</code>, <code>0.4835~0.4850</code>.</li>
+</ul>
+<p>Trendline: 1H/15m 모두 상승 힌트, confidence medium. 다만 급등 이후라 독립 근거로 쓰기보다 EMA/VRVP/스윙 레벨 보조 근거로만 봅니다.</p>
+</section>
+<section class="report-section" id="section-5">
+<div class="section-heading">
+<span class="section-num">05</span>
+<span class="section-title">5. 크로스 피쳐 종합</span>
+</div>
+<p><strong>스퀴즈 Thesis:</strong> OI는 <code>98.1M</code>대로 강하게 증가했고 visible high에 있습니다. 가격도 급등했으나 Funding은 <code>0.0640</code> 양수로 롱 비용 부담이 커졌습니다. LSR은 1H ratio <code>1.427</code>, 롱 약 <code>58.79%</code>, 15m ratio <code>1.437</code>, 롱 약 <code>58.97%</code>로 계정 수 기준 롱 우세입니다. 즉 현재 구조는 “상승 추세 + 롱 계정/비용 과열 + OI 고점권”입니다.</p>
+<p>Futs CVD는 1H에서 <code>-2.579M</code>, 전체는 하락 후 반등(<code>decline_then_rebound</code>)이라 최근 선물 매수 회복이 있습니다. 15m는 <code>1.637M</code>으로 전체 우상향이나 최근은 하락, <code>spike_then_fade</code>입니다. Spot CVD는 1H <code>-16.635M</code> steady downtrend, 15m도 전체 down입니다. 현물 수급은 약하고, 선물 주도 급등 성격이 강합니다.</p>
+<p>결론은 롱 추세가 살아 있지만, 저시총 알트 스퀴즈 관점에서는 <code>0.60</code> 위 유지 실패 시 롱스퀴즈/청산성 되돌림 위험이 큽니다. 숏은 단순 역추세가 아니라 <code>0.585</code> 또는 <code>0.563</code> 이탈 확인이 붙을 때만 유효합니다.</p>
+</section>
+<section class="report-section" id="section-6">
+<div class="section-heading">
+<span class="section-num">06</span>
+<span class="section-title">6. 매매 시나리오</span>
+</div>
+<p>각 주문 조각은 별도 SL/TP 수량으로 관리하는 전제입니다.</p>
+<p><strong>시나리오 A: 숏(고점 롱스퀴즈/돌파 실패) — 확률 40%</strong> 핵심 가설: OI 고점권 + Funding 양수 + LSR 롱 우세 + 15m Futs CVD 둔화로, <code>0.60</code> 유지 실패 시 고점 롱 청산 되돌림을 노립니다.</p>
+<ul class="body-list">
+<li>공격 진입:</li>
+<p>조건: <code>0.6000~0.6010</code> 재테스트 후 5m 상단 꼬리, 다음 5m에서 <code>0.595</code> 아래 유지 또는 <code>0.595~0.600</code> 반등 리테스트 실패. Entry point: <code>0.592~0.596</code> TP, Hard SL: TP1 <code>0.568</code>, TP2 <code>0.532</code>, Hard SL <code>0.6065</code>(근거: <code>0.6010</code> sweep high 상단 바깥 + buffer), 손절폭 약 <code>1.8~2.4%</code>, R:R 약 <code>1.8/4.5</code>, 비중 25%.</p>
+</ul>
+<ul class="body-list">
+<li>확인 진입:</li>
+<p>조건: 15m 종가가 <code>0.585</code> 아래로 닫히고, 다음 5m 반등이 <code>0.585~0.590</code>에서 막히며 음봉 거래량 우위가 나오면 본진입. Entry point: <code>0.582~0.586</code> TP, Hard SL: TP1 <code>0.563</code>, TP2 <code>0.532</code>, Hard SL <code>0.602</code>(근거: 이탈 실패 시 고점권 회복), 손절폭 약 <code>2.7~3.4%</code>, R:R 약 <code>0.9/2.8</code>, 비중 50%.</p>
+</ul>
+<ul class="body-list">
+<li>눌림 진입:</li>
+<p>조건: <code>0.585</code> 이탈이 먼저 나온 뒤 <code>0.590~0.595</code> 리테스트가 저항으로 바뀌고 5m 고점 하락이 나오면 진입. Entry point: <code>0.590~0.593</code> TP, Hard SL: TP1 <code>0.568</code>, TP2 <code>0.532</code>, Hard SL <code>0.6065</code>(근거: 리테스트 저항과 직전 swing high 회복), 손절폭 약 <code>2.3~2.8%</code>, R:R 약 <code>1.5/3.8</code>, 비중 25%.</p>
+</ul>
+<p><strong>시나리오 B: 롱(숏커버 연장/0.60 돌파 유지) — 확률 35%</strong> 핵심 가설: OI 증가와 1H Futs CVD 회복이 가격을 계속 밀면 <code>0.60</code> 위 숏커버 연장이 가능합니다. 단, Funding/LSR 과열 때문에 소액 또는 확인형만 적합합니다.</p>
+<ul class="body-list">
+<li>공격 진입:</li>
+<p>조건: 소액 스퀴즈 베팅: <code>0.585</code> 위를 5m에서 지키고 <code>0.595</code> 재돌파 후 다음 5m 저점이 높아지면 일부 진입. Entry point: <code>0.595~0.600</code> TP, Hard SL: TP1 <code>0.620</code>, TP2 <code>0.650</code>, Hard SL <code>0.575</code>(근거: 현재 균형선 <code>0.585</code> 하단 이탈 + 급등 유지 실패), 손절폭 약 <code>3.4~4.2%</code>, R:R 약 <code>1.0/2.2</code>, 비중 15~20%, 계좌 손실 허용액 기준 notional 축소.</p>
+</ul>
+<ul class="body-list">
+<li>확인 진입:</li>
+<p>조건: 15m 종가가 <code>0.601</code> 위에서 닫히고, 다음 5m 리테스트가 <code>0.600</code>을 지키며 재상승하면 본진입. Entry point: <code>0.602~0.606</code> TP, Hard SL: TP1 <code>0.630</code>, TP2 <code>0.660</code>, Hard SL <code>0.584</code>(근거: 돌파선 실패 후 기존 균형선 이탈), 손절폭 약 <code>3.0~3.6%</code>, R:R 약 <code>1.3/2.5</code>, 비중 40%.</p>
+</ul>
+<ul class="body-list">
+<li>눌림 진입:</li>
+<p>조건: <code>0.60</code> 돌파 유지가 먼저 나온 뒤 <code>0.563~0.568</code>까지 깊게 눌리고, 5m 하단 꼬리와 <code>0.568</code> 재회복이 나오면 대기 진입. Entry point: <code>0.563~0.568</code> TP, Hard SL: TP1 <code>0.600</code>, TP2 <code>0.630</code>, Hard SL <code>0.552</code>(근거: 15m EMA20 하단과 눌림 저점 이탈), 손절폭 약 <code>2.0~2.8%</code>, R:R 약 <code>2.0/4.0</code>, 비중 40%.</p>
+</ul>
+<p><strong>시나리오 C: 노트레이드/레인지 대기 — 확률 25%</strong> 진입 없음. <code>0.585~0.600</code> 안에서 작은 몸통과 윗꼬리만 반복되면 OI 고점권 포지션이 쌓인 상태라 방향 추격 리스크가 큽니다. <code>0.60</code> 위 15m 유지 또는 <code>0.585</code> 아래 15m 이탈 중 하나가 나오기 전까지는 대기 우선입니다.</p>
+</section>
+<section class="report-section" id="section-7">
+<div class="section-heading">
+<span class="section-num">07</span>
+<span class="section-title">7. 리스크 요인</span>
+</div>
+<ul class="body-list">
+<li>Funding <code>0.0640</code> 양수와 LSR 롱 우세는 롱 추격 비용 부담을 키웁니다.</li>
+<li>Spot CVD가 1H/15m 모두 약해 현물 기반 상승 신뢰도는 낮습니다.</li>
+<li>OI가 고점권에서 둔화 중이라, <code>0.60</code> 실패 시 되돌림 속도가 빠를 수 있습니다.</li>
+<li>반대로 <code>0.60</code> 위에서 15m 종가 유지 + 5m 리테스트 성공이 나오면 숏은 즉시 무효화하고 숏커버 연장을 우선 봐야 합니다.</li>
+</ul>
+</section>
+  </article>
+
+  <footer>
+    <span>© 2025 coin-reports · Generated by v2-vision-codex</span>
+    <span>Not financial advice — informational purposes only</span>
+  </footer>
+</main>
+</body>
+</html>
